@@ -27,16 +27,16 @@ public class MainActivity extends AppCompatActivity {
         //sample move data
 
         Movie[] movies = {
-                new Movie("Cupcake", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("Donut", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("Eclair", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("Froyo", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("GingerBread", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
-                new Movie("Honeycomb", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
-                new Movie("Ice Cream Sandwich", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
-                new Movie("Jelly Bean", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
-                new Movie("KitKat", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
-                new Movie("Lollipop", "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release")
+                new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("Donut", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("Eclair", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("Froyo", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("GingerBread", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Honeycomb", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Ice Cream Sandwich", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Jelly Bean", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("KitKat", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Lollipop", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release")
         };
 
         mMovieAdapter = new MovieAdapter(this, Arrays.asList(movies));
