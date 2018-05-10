@@ -56,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, selectedMovie.getOriginalTitle(), Toast.LENGTH_SHORT).show();
 
+                Intent i = new Intent(getApplicationContext(), MovieDetails.class);
+                i.putExtra("ORIGINAL_NAME", selectedMovie.getOriginalTitle());
+                i.putExtra("PLOT", selectedMovie.getPlotSynopsis());
+                i.putExtra("POSTER_IMAGE", selectedMovie.getPosterImage());
+                i.putExtra("RELEASE_DATE", selectedMovie.getReleaseDate());
+                i.putExtra("USER_RATING", selectedMovie.getUserRating());
+
+                startActivity(i);
+
+
                 // TO DO update to open details view
               /*  // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(selectedMovie.getOriginalTitle());
@@ -65,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Send the intent to launch a new activity
                 startActivity(websiteIntent);*/
+
+
             }
         });
 
