@@ -6,11 +6,11 @@ public class Movie {
     private String originalTitle;
     private String posterImage;
     private String plotSynopsis;
-    private float userRating;
+    private double userRating;
     private String releaseDate;
 
 
-    public Movie(String originalTitle, String posterImage, String plotSynopsis, float userRating, String releaseDate) {
+    public Movie(String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate) {
         this.originalTitle = originalTitle;
         this.posterImage = posterImage;
         this.plotSynopsis = plotSynopsis;
@@ -42,7 +42,7 @@ public class Movie {
         this.plotSynopsis = plotSynopsis;
     }
 
-    public float getUserRating() {
+    public double getUserRating() {
         return userRating;
     }
 

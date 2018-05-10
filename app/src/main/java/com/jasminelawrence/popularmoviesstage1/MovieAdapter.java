@@ -34,11 +34,11 @@ public class MovieAdapter  extends ArrayAdapter<Movie> {
         }
 
         ImageView iconView = convertView.findViewById(R.id.image_iv);
-        Picasso.with(getContext())
-                .load(movie.getPosterImage())
+        Picasso.get().load(movie.getPosterImage())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(iconView);
+
 
         TextView versionNameView = convertView.findViewById(R.id.original_title_tv);
         versionNameView.setText(movie.getOriginalTitle());
