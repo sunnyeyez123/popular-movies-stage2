@@ -23,6 +23,7 @@ public class MovieDetails extends AppCompatActivity {
 
             TextView nameTextView = findViewById(R.id.original_name_tv);
             nameTextView.setText(name);
+            setTitle(name);
         }
     }
 }
