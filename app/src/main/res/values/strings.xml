@@ -3,5 +3,21 @@
 
     <!-- Content descriptions-->
     <string name="poster_image_content_description">Movie poster image </string>
+    <string name="movie_title_content_description">Movie title </string>
+    <string name="user_rating_content_description">User Rating </string>
+    <string name="release_date_content_description">Release Date</string>
+    <string name="plot_synopsis_content_description">Plot Synopsis</string>
+
+
+
+    <string name="movie_title_label">Movie title </string>
+
+    <string name="user_rating_label">User Rating </string>
+
+    <string name="release_date_label">Release Date</string>
+
+    <string name="plot_synopsis_label">Plot Synopsis</string>
+
+
 
 </resources>
