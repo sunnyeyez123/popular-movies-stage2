@@ -9,6 +9,12 @@
     <string name="plot_synopsis_content_description">Plot Synopsis</string>
 
 
+    <string name="sort_by_popular">Sort by Popularity</string>
+    <string name="sort_by_rating">Sort by User Rating</string>
+
+
+
+    <!-- Details Labels -->
 
     <string name="movie_title_label">Movie title </string>
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -17,6 +19,34 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter mMovieAdapter;
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.sort_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int option_id = item.getItemId();
+
+        switch (option_id){
+
+            case R.id.popular_sort:
+                //popular
+                Toast.makeText(this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
+
+            case R.id.top_rated_sort:
+                //user rating
+                Toast.makeText(this, "Sorting by user rating", Toast.LENGTH_SHORT).show();
+
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
