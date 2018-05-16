@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         //sample move data
 
         Movie[] movies = {
-                new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description.test description.test description. test description", 1.776, "test release"),
                 new Movie("Donut", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
                 new Movie("Eclair", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
                 new Movie("Froyo", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("PLOT", selectedMovie.getPlotSynopsis());
                 i.putExtra("POSTER_IMAGE", selectedMovie.getPosterImage());
                 i.putExtra("RELEASE_DATE", selectedMovie.getReleaseDate());
-                i.putExtra("USER_RATING", selectedMovie.getUserRating());
+                i.putExtra("USER_RATING", String.valueOf(selectedMovie.getUserRating()));
 
                 startActivity(i);
 
