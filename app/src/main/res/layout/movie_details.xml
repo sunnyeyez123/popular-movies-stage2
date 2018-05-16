@@ -15,8 +15,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/poster_image_content_description"
         android:scaleType="centerCrop"
-        android:paddingLeft="8dp"
-
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
