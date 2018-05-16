@@ -12,11 +12,28 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
     private MovieAdapter mMovieAdapter;
+
+
+    private void movieSearch() {
+
+       URL movieURL = NetworkUtils.buildUrl();
+
+        String searchResults = null;
+        try {
+            searchResults = NetworkUtils.getResponseFromHttpUrl(movieURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     @Override
@@ -31,21 +48,27 @@ public class MainActivity extends AppCompatActivity {
 
         int option_id = item.getItemId();
 
-        switch (option_id){
+        switch (option_id) {
 
             case R.id.popular_sort:
                 //popular
+
                 Toast.makeText(this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
+                movieSearch();
+                return true;
 
             case R.id.top_rated_sort:
                 //user rating
                 Toast.makeText(this, "Sorting by user rating", Toast.LENGTH_SHORT).show();
+                movieSearch();
+                return true;
 
 
 
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -53,14 +76,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //sample move data
 
         Movie[] movies = {
-                new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description.test description.test description. test description", 1.776, "test release"),
-                new Movie("Donut", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("Eclair", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
-                new Movie("Froyo", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","test description", 1.776, "test release"),
+                new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description.test description.test description. test description", 1.776, "test release"),
+                new Movie("Donut", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Eclair", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
+                new Movie("Froyo", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
                 new Movie("GingerBread", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
                 new Movie("Honeycomb", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
                 new Movie("Ice Cream Sandwich", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description", 1.776, "test release"),
@@ -72,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         mMovieAdapter = new MovieAdapter(this, Arrays.asList(movies));
 
         // Get a reference to the ListView, and attach this adapter to it.
-        GridView movieListView =  findViewById(R.id.movies_gridview);
+        GridView movieListView = findViewById(R.id.movies_gridview);
         movieListView.setAdapter(mMovieAdapter);
 
 
@@ -82,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
-                Movie selectedMovie= mMovieAdapter.getItem(position);
+                Movie selectedMovie = mMovieAdapter.getItem(position);
 
                 Toast.makeText(MainActivity.this, selectedMovie.getOriginalTitle(), Toast.LENGTH_SHORT).show();
 
@@ -109,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        movieSearch();
 
     }
 }
