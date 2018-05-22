@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 // Find the current earthquake that was clicked on
                 Movie selectedMovie = mMovieAdapter.getItem(position);
 
-                Toast.makeText(MainActivity.this, selectedMovie.getOriginalTitle(), Toast.LENGTH_SHORT).show();
-
                 Intent i = new Intent(getApplicationContext(), MovieDetails.class);
                 i.putExtra("ORIGINAL_NAME", selectedMovie.getOriginalTitle());
                 i.putExtra("PLOT", selectedMovie.getPlotSynopsis());
@@ -154,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 // Extract the value for the key called "place"
                 String plot_synopsis = currentMovie.getString("overview");
 
+                //TODO format the date
                 // Extract the value for the key called "place"
                 String release_date = currentMovie.getString("release_date");
 
@@ -202,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.popular_sort:
                 //popular
-                Toast.makeText(MainActivity.this, "popular", Toast.LENGTH_SHORT).show();
 
                 filter = getResources().getString(R.string.popular_filter);
                 movieSearch(filter);
@@ -210,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.top_rated_sort:
                 //user rating
-                Toast.makeText(MainActivity.this, "rating", Toast.LENGTH_SHORT).show();
 
                 filter = getResources().getString(R.string.rating_filter);
                 movieSearch(filter);
