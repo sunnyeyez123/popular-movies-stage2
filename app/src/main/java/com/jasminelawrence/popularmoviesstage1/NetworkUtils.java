@@ -29,23 +29,14 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
-
-
     final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
     final static String API_KEY_PARAM = "api_key";
-
-    /*
-     * The sort field. One of stars, forks, or updated.
-     * Default: results are sorted by best match if no field is specified.
-     */
-
     final static String YOUR_API_KEY = "TBD";
 
     public static URL buildUrl(String filter) {
 
 
         Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(filter).appendQueryParameter(API_KEY_PARAM, YOUR_API_KEY).build();
-
 
         URL url = null;
         try {

@@ -9,6 +9,9 @@
     <string name="plot_synopsis_content_description">Plot Synopsis</string>
 
 
+
+    <!-- Used for Sorting -->
+
     <string name="sort_by_popular">Sort by Popularity</string>
     <string name="sort_by_rating">Sort by User Rating</string>
 

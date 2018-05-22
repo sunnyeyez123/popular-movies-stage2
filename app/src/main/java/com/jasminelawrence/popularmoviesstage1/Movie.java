@@ -10,7 +10,7 @@ public class Movie {
     private String releaseDate;
 
 
-    public Movie(String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate) {
+    Movie(String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate) {
         this.originalTitle = originalTitle;
         this.posterImage = posterImage;
         this.plotSynopsis = plotSynopsis;
@@ -22,40 +22,24 @@ public class Movie {
         return originalTitle;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
 
     public String getPosterImage() {
         return posterImage;
     }
 
-    public void setPosterImage(String posterImage) {
-        this.posterImage = posterImage;
-    }
 
     public String getPlotSynopsis() {
         return plotSynopsis;
     }
 
-    public void setPlotSynopsis(String plotSynopsis) {
-        this.plotSynopsis = plotSynopsis;
-    }
 
     public double getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(float userRating) {
-        this.userRating = userRating;
-    }
 
     public String getReleaseDate() {
         return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
 

@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MovieAdapter  extends ArrayAdapter<Movie> {
+public class MovieAdapter extends ArrayAdapter<Movie> {
     private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
 
 
@@ -25,21 +25,19 @@ public class MovieAdapter  extends ArrayAdapter<Movie> {
         // Get the movie from the ArrayAdapter at the selected position
         Movie movie = getItem(position);
 
-        // Adapters recycle views to AdapterViews.
-        // If this is a new View object we're getting, then inflate the layout.
-        // If not, this view already has the layout inflated from a previous call to getView,
-        // and we modify the View widgets as usual.
+        //reuse the old views if you have them
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_item, parent, false);
         }
 
+        //display the movie box art
         ImageView iconView = convertView.findViewById(R.id.image_iv);
         Picasso.get().load(movie.getPosterImage())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(iconView);
 
-
+        //display the movie name
         TextView versionNameView = convertView.findViewById(R.id.original_title_tv);
         versionNameView.setText(movie.getOriginalTitle());
 
