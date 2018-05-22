@@ -12,6 +12,8 @@
     <string name="sort_by_popular">Sort by Popularity</string>
     <string name="sort_by_rating">Sort by User Rating</string>
 
+    <string name="popular_filter">popular</string>
+    <string name="rating_filter">top_rated</string>
 
 
     <!-- Details Labels -->

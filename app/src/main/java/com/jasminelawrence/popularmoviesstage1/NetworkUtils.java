@@ -39,13 +39,12 @@ public class NetworkUtils {
      * Default: results are sorted by best match if no field is specified.
      */
 
-    final static String SORT_PARAM = "popular";
     final static String YOUR_API_KEY = "TBD";
 
-    public static URL buildUrl() {
+    public static URL buildUrl(String filter) {
 
 
-        Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(SORT_PARAM).appendQueryParameter(API_KEY_PARAM, YOUR_API_KEY).build();
+        Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(filter).appendQueryParameter(API_KEY_PARAM, YOUR_API_KEY).build();
 
 
         URL url = null;

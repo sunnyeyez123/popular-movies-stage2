@@ -1,8 +1,10 @@
 package com.jasminelawrence.popularmoviesstage1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,8 +30,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String TAG = MainActivity.class.getSimpleName();
+
     private MovieAdapter mMovieAdapter;
-    private List<Movie> mMovieList;
+    private ArrayList<Movie> mMovieList;
+    private GridView movieListView;
+    private String filter;
 
 
     @Override
@@ -37,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMovieAdapter = new MovieAdapter(this, mMovieList);
+        mMovieList = new ArrayList<>();
 
         // Get a reference to the ListView, and attach this adapter to it.
-        GridView movieListView = findViewById(R.id.movies_gridview);
-        movieListView.setAdapter(mMovieAdapter);
+        movieListView = findViewById(R.id.movies_gridview);
+        filter = getResources().getString(R.string.popular_filter);
+        movieSearch(filter);
 
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
@@ -64,114 +71,107 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
 
 
-                // TO DO update to open details view
-              /*  // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri earthquakeUri = Uri.parse(selectedMovie.getOriginalTitle());
-
-                // Create a new intent to view the earthquake URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
-
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);*/
-
-
             }
         });
 
-        movieSearch();
+
+    }
+
+    private void movieSearch(String filter) {
+
+        URL movieURL = NetworkUtils.buildUrl(filter);
+
+        new MovieSearchTask().execute(movieURL);
 
     }
 
 
-    private void movieSearch() {
 
-       URL movieURL = NetworkUtils.buildUrl();
-       new MovieSearchTask().execute(movieURL);
-
-    }
-
-    public class MovieSearchTask extends AsyncTask<URL, Void, String> {
+    public class MovieSearchTask extends AsyncTask<URL, Void, Void> {
 
         // COMPLETED (2) Override the doInBackground method to perform the query. Return the results. (Hint: You've already written the code to perform the query)
         @Override
-        protected String doInBackground(URL... params) {
+        protected Void doInBackground(URL... params) {
             URL searchUrl = params[0];
             String movieSearchResults = null;
             try {
                 movieSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                mMovieList = extractFeatureFromJson(movieSearchResults);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return movieSearchResults;
+
+            return null;
         }
 
         // COMPLETED (3) Override onPostExecute to display the results in the TextView
         @Override
-        protected void onPostExecute(String movieSearchResults) {
-            if (movieSearchResults != null && !movieSearchResults.equals("")) {
-                Toast.makeText(getBaseContext(), "Completed successfully", Toast.LENGTH_SHORT).show();
-                String test = movieSearchResults;
-                //make an object and parse json
-                mMovieList = extractFeatureFromJson(movieSearchResults);
+        protected void onPostExecute(Void v) {
 
-            }
+            mMovieAdapter = new MovieAdapter(MainActivity.this, mMovieList);
+            movieListView.setAdapter(mMovieAdapter);
+
+
         }
+
     }
 
 
-    private static List<Movie> extractFeatureFromJson(String MoviesJSON) {
+    private static ArrayList<Movie> extractFeatureFromJson(String MoviesJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(MoviesJSON)) {
             return null;
         }
 
         // Create an empty ArrayList that we can start adding Articles to
-        List<Movie> movieList = new ArrayList<>();
+        ArrayList<Movie> movieList = new ArrayList<>();
+
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
+
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(MoviesJSON);
 
-            // Extract the JSONArray associated with the key called "reponse",
-            // which represents a list of items (or Articles).
-            JSONObject response = baseJsonResponse.getJSONObject("response");
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of items (or movies).
 
-            JSONArray articlesArray = response.getJSONArray("results");
+            JSONArray moviesArray = baseJsonResponse.getJSONArray("results");
 
-            // For each Article in the ArticleArray, create an {@link Article} object
-            for (int i = 0; i < articlesArray.length(); i++) {
+            // For each Movie in the MovieArray, create an {@link Movie} object
+            for (int i = 0; i < moviesArray.length(); i++) {
 
                 // Get a single Article at position i within the list of Articles
-                JSONObject currentArticle = articlesArray.getJSONObject(i);
+                JSONObject currentMovie = moviesArray.getJSONObject(i);
 
-                // For a given Article, extract the JSONObject associated with the
-                // key called "results", which represents a list of all properties
-                // for that Article.
-                // Extract the value for the key called "place"
-                JSONObject fields = currentArticle.getJSONObject("fields");
-                String title = fields.getString("headline");
+
+                String original_title = currentMovie.getString("original_title");
 
                 // Extract the value for the key called "place"
-                String section = currentArticle.getString("sectionName");
+                String plot_synopsis = currentMovie.getString("overview");
 
                 // Extract the value for the key called "place"
-                String published = currentArticle.getString("webPublicationDate");
+                String release_date = currentMovie.getString("release_date");
 
                 // Extract the value for the key called "place"
-                String url = currentArticle.getString("webUrl");
+                String poster_path = currentMovie.getString("poster_path");
 
+                String poster_url = "http://image.tmdb.org/t/p/w185/" + poster_path;
+
+                double user_rating = currentMovie.getDouble("vote_average");
 
                 // Create a new {@link Article} object with the title, author, date published,
                 // and url from the JSON response.
-                Movie movie  =  new Movie("Cupcake", "http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "test description.test description.test description. test description", 1.776, "test release");
+                Movie movie = new Movie(original_title, poster_url, plot_synopsis, user_rating, release_date);
 
 
                 // Add the new {@link Article} to the list of Articles.
                 movieList.add(movie);
+
             }
 
         } catch (JSONException e) {
@@ -179,12 +179,12 @@ public class MainActivity extends AppCompatActivity {
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
             Log.e("MainActivity", "Problem parsing the Article JSON results", e);
+
         }
 
-        // Return the list of Articles
+        // Return the list of movies
         return movieList;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -202,17 +202,19 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.popular_sort:
                 //popular
+                Toast.makeText(MainActivity.this, "popular", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
-                movieSearch();
+                filter = getResources().getString(R.string.popular_filter);
+                movieSearch(filter);
                 return true;
 
             case R.id.top_rated_sort:
                 //user rating
-                Toast.makeText(this, "Sorting by user rating", Toast.LENGTH_SHORT).show();
-                movieSearch();
-                return true;
+                Toast.makeText(MainActivity.this, "rating", Toast.LENGTH_SHORT).show();
 
+                filter = getResources().getString(R.string.rating_filter);
+                movieSearch(filter);
+                return true;
 
 
         }
