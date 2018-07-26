@@ -12,9 +12,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieAdapter extends ArrayAdapter<Movie> {
     private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
 
+    @BindView(R.id.original_title_tv)
+    TextView versionNameView;
+    @BindView(R.id.image_iv)
+    ImageView iconView;
 
     public MovieAdapter(Activity context, List<Movie> movies) {
         super(context, 0, movies);
@@ -24,6 +31,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the movie from the ArrayAdapter at the selected position
         Movie movie = getItem(position);
+        ButterKnife.bind(this,convertView);
+
 
         //reuse the old views if you have them
         if (convertView == null) {
@@ -31,14 +40,12 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         }
 
         //display the movie box art
-        ImageView iconView = convertView.findViewById(R.id.image_iv);
         Picasso.get().load(movie.getPosterImage())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(iconView);
 
         //display the movie name
-        TextView versionNameView = convertView.findViewById(R.id.original_title_tv);
         versionNameView.setText(movie.getOriginalTitle());
 
 
