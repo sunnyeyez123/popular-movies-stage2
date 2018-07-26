@@ -1,4 +1,4 @@
-package com.jasminelawrence.popularmoviesstage1;
+package com.jasminelawrence.popularmoviesstage2;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

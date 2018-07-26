@@ -1,7 +1,5 @@
-package com.jasminelawrence.popularmoviesstage1;
+package com.jasminelawrence.popularmoviesstage2;
 
-import android.content.Intent;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -39,7 +37,7 @@ public class MovieDetails extends AppCompatActivity {
             Toast.makeText(MovieDetails.this, "No movie data", Toast.LENGTH_SHORT).show();
 
         } else {
-            
+
             String poster_image = movie.getPosterImage();
 
             Picasso.get().load(poster_image)

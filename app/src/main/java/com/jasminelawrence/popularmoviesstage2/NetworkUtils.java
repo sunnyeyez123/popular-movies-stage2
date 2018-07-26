@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jasminelawrence.popularmoviesstage1;
+package com.jasminelawrence.popularmoviesstage2;
 
 import android.net.Uri;
 

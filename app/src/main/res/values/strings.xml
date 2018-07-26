@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies Stage 1</string>
+    <string name="app_name">Popular Movies Stage 2</string>
 
     <!-- Content descriptions-->
     <string name="poster_image_content_description">Movie poster image </string>

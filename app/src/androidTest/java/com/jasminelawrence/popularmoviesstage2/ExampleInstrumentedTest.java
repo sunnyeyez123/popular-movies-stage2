@@ -1,4 +1,4 @@
-package com.jasminelawrence.popularmoviesstage1;
+package com.jasminelawrence.popularmoviesstage2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
