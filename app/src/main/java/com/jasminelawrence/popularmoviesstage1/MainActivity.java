@@ -1,6 +1,9 @@
 package com.jasminelawrence.popularmoviesstage1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> mMovieList;
     private GridView movieListView;
     private String filter;
+    private boolean isConnected;
+
+
 
     private static ArrayList<Movie> extractFeatureFromJson(String MoviesJSON) {
         // If the JSON string is empty or null, then return early.
@@ -92,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
         mMovieList = new ArrayList<>();
 
         // Get a reference to the GridView, and attach this adapter to it.
@@ -122,8 +135,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void movieSearch(String filter) {
-        URL movieURL = NetworkUtils.buildUrl(filter);
-        new MovieSearchTask().execute(movieURL);
+
+        if(isConnected){
+            URL movieURL = NetworkUtils.buildUrl(filter);
+            new MovieSearchTask().execute(movieURL);
+        }
 
     }
 
