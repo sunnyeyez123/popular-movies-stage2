@@ -31,12 +31,14 @@ public class NetworkUtils {
 
     final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
     final static String API_KEY_PARAM = "api_key";
-    final static String YOUR_API_KEY = "TBD";
+    private static final String API_KEY = BuildConfig.API_KEY;
+
+
 
     public static URL buildUrl(String filter) {
 
 
-        Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(filter).appendQueryParameter(API_KEY_PARAM, YOUR_API_KEY).build();
+        Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(filter).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
 
         URL url = null;
         try {

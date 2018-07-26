@@ -9,13 +9,26 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetails extends AppCompatActivity {
+
+    @BindView(R.id.original_title_tv)
+    TextView nameTextView;
+    @BindView(R.id.release_date_tv)
+    TextView releaseDateTextView;
+    @BindView(R.id.plot_synopsis_tv)
+    TextView plotTextView;
+    @BindView(R.id.user_rating_tv)
+    TextView ratingTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-
+        ButterKnife.bind(this);
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             Toast.makeText(MovieDetails.this, "No movie data", Toast.LENGTH_SHORT).show();
@@ -34,14 +47,10 @@ public class MovieDetails extends AppCompatActivity {
             }
 
 
-
-
-
             // get data via the key
             String name = extras.getString("ORIGINAL_NAME");
             if (name != null) {
 
-                TextView nameTextView = findViewById(R.id.original_title_tv);
                 nameTextView.setText(name);
                 setTitle(name);
             }
@@ -49,22 +58,18 @@ public class MovieDetails extends AppCompatActivity {
 
             String release_date = extras.getString("RELEASE_DATE");
             if (release_date != null) {
-
-                TextView releaseDateTextView = findViewById(R.id.release_date_tv);
                 releaseDateTextView.setText(release_date);
             }
 
             String plot_synopsis = extras.getString("PLOT");
             if (plot_synopsis != null) {
 
-                TextView plotTextView = findViewById(R.id.plot_synopsis_tv);
                 plotTextView.setText(plot_synopsis);
             }
 
             String user_rating = extras.getString("USER_RATING");
             if (user_rating != null) {
 
-                TextView ratingTextView = findViewById(R.id.user_rating_tv);
                 ratingTextView.setText(user_rating);
             }
 
