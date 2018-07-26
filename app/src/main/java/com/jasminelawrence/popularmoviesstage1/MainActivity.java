@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void movieSearch(String filter) {
 
-        if(isConnected){
+        if(true){
             URL movieURL = NetworkUtils.buildUrl(filter);
             new MovieSearchTask().execute(movieURL);
         }

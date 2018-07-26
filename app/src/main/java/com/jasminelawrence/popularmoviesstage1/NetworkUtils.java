@@ -29,9 +29,9 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
-    final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
-    final static String API_KEY_PARAM = "api_key";
-    private static final String API_KEY = BuildConfig.API_KEY;
+    private final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
+    private final static String API_KEY_PARAM = "api_key";
+    private final static String API_KEY = BuildConfig.API_KEY;
 
 
 

@@ -31,12 +31,13 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the movie from the ArrayAdapter at the selected position
         Movie movie = getItem(position);
-        ButterKnife.bind(this,convertView);
 
 
         //reuse the old views if you have them
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_item, parent, false);
+            ButterKnife.bind(this,convertView);
+
         }
 
         //display the movie box art
