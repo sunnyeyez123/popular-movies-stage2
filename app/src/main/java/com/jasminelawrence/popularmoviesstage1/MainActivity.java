@@ -122,13 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 Movie selectedMovie = mMovieAdapter.getItem(position);
 
                 Intent i = new Intent(getApplicationContext(), MovieDetails.class);
-                i.putExtra("ORIGINAL_NAME", selectedMovie.getOriginalTitle());
-                i.putExtra("PLOT", selectedMovie.getPlotSynopsis());
-                i.putExtra("POSTER_IMAGE", selectedMovie.getPosterImage());
-                i.putExtra("RELEASE_DATE", selectedMovie.getReleaseDate());
-                i.putExtra("USER_RATING", String.valueOf(selectedMovie.getUserRating()));
+                i.putExtra("theMovieDetails", selectedMovie); // using the (String name, Parcelable value) overload!
+                startActivity(i); // dataToSend is now passed to the new Activity
 
-                startActivity(i);
             }
         });
 
