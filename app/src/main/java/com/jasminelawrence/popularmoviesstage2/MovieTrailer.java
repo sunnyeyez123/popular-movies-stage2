@@ -1,6 +1,9 @@
 package com.jasminelawrence.popularmoviesstage2;
 
-public class MovieTrailer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MovieTrailer implements Parcelable {
 
     private String mName;
     private String mKey;
@@ -11,11 +14,39 @@ public class MovieTrailer {
 
     }
 
-    public String getmName() {
+    protected MovieTrailer(Parcel in) {
+        mName = in.readString();
+        mKey = in.readString();
+    }
+
+    public static final Creator<MovieTrailer> CREATOR = new Creator<MovieTrailer>() {
+        @Override
+        public MovieTrailer createFromParcel(Parcel in) {
+            return new MovieTrailer(in);
+        }
+
+        @Override
+        public MovieTrailer[] newArray(int size) {
+            return new MovieTrailer[size];
+        }
+    };
+
+    public String getName() {
         return mName;
     }
 
-    public String getmKey() {
+    public String getKey() {
         return mKey;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mName);
+        parcel.writeString(mKey);
     }
 }

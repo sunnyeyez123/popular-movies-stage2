@@ -4,7 +4,10 @@ package com.jasminelawrence.popularmoviesstage2;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Movie implements Parcelable {
+
 
     // After implementing the `Parcelable` interface, we need to create the
     // `Parcelable.Creator<MyParcelable> CREATOR` constant for our class;
@@ -25,52 +28,82 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-    private String originalTitle;
-    private String posterImage;
-    private String plotSynopsis;
-    private double userRating;
-    private String releaseDate;
+    private String mOriginalTitle;
+    private String mPosterImage;
+    private String mPlotSynopsis;
+    private double mUserRating;
+    private String mReleaseDate;
+    private double mID;
+    private ArrayList<MovieReview> mReviews;
+    private ArrayList<MovieTrailer> mTrailers;
+    private boolean mIsFavorite;
 
-    public Movie(String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate) {
-        this.originalTitle = originalTitle;
-        this.posterImage = posterImage;
-        this.plotSynopsis = plotSynopsis;
-        this.userRating = userRating;
-        this.releaseDate = releaseDate;
+
+    public Movie(double id, String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate, ArrayList<MovieReview> reviews, ArrayList<MovieTrailer> trailers, boolean isFavorite) {
+        mOriginalTitle = originalTitle;
+        mPosterImage = posterImage;
+        mPlotSynopsis = plotSynopsis;
+        mUserRating = userRating;
+        mReleaseDate = releaseDate;
+        mID = id;
+        mReviews = reviews;
+        mTrailers = trailers;
+        mIsFavorite = isFavorite;
+
     }
-
 
     // Using the `in` variable, we can retrieve the values that
     // we originally wrote into the `Parcel`.  This constructor is usually
     // private so that only the `CREATOR` field can access.
     private Movie(Parcel in) {
 
-        originalTitle = in.readString();
-        posterImage = in.readString();
-        plotSynopsis = in.readString();
-        userRating = in.readDouble();
-        releaseDate = in.readString();
+        mOriginalTitle = in.readString();
+        mPosterImage = in.readString();
+        mPlotSynopsis = in.readString();
+        mUserRating = in.readDouble();
+        mReleaseDate = in.readString();
+        mID = in.readDouble();
+        mReviews = in.createTypedArrayList(MovieReview.CREATOR);
+        mTrailers = in.createTypedArrayList(MovieTrailer.CREATOR);
+        mIsFavorite = in.readByte() != 0;
 
+
+    }
+
+    public boolean isFavorite() {
+        return mIsFavorite;
     }
 
     public String getOriginalTitle() {
-        return originalTitle;
+        return mOriginalTitle;
     }
 
     public String getPosterImage() {
-        return posterImage;
+        return mPosterImage;
     }
 
     public String getPlotSynopsis() {
-        return plotSynopsis;
+        return mPlotSynopsis;
     }
 
     public double getUserRating() {
-        return userRating;
+        return mUserRating;
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        return mReleaseDate;
+    }
+
+    public double getID() {
+        return mID;
+    }
+
+    public ArrayList<MovieReview> getReviews() {
+        return mReviews;
+    }
+
+    public ArrayList<MovieTrailer> getTrailers() {
+        return mTrailers;
     }
 
     @Override
@@ -80,11 +113,19 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeString(originalTitle);
-        parcel.writeString(posterImage);
-        parcel.writeString(plotSynopsis);
-        parcel.writeDouble(userRating);
-        parcel.writeString(releaseDate);
+        parcel.writeString(mOriginalTitle);
+        parcel.writeString(mPosterImage);
+        parcel.writeString(mPlotSynopsis);
+        parcel.writeDouble(mUserRating);
+        parcel.writeString(mReleaseDate);
+        parcel.writeDouble(mUserRating);
+        parcel.writeDouble(mID);
+        parcel.writeTypedList(mReviews);
+        parcel.writeTypedList(mTrailers);
+        parcel.writeByte((byte) (mIsFavorite ? 1 : 0));
+
 
     }
+
+
 }
