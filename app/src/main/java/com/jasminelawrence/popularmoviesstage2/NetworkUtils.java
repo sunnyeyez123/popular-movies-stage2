@@ -37,6 +37,11 @@ public class NetworkUtils {
     private final static String API_KEY = BuildConfig.API_KEY;
 
 
+    private final static String REVIEW_PATH = "review";
+    private final static String VIDEO_PATH = "movies";
+
+
+
 
     public static URL buildUrl(String filter) {
 
@@ -56,7 +61,7 @@ public class NetworkUtils {
     public static URL buildReviewUrl(String movieID) {
 
 
-        Uri builtUri = Uri.parse(REVIEW_MOVIE_DB_URL).buildUpon().appendPath(movieID).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+        Uri builtUri = Uri.parse(REVIEW_MOVIE_DB_URL).buildUpon().appendPath(movieID).appendPath(REVIEW_PATH).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
 
         URL url = null;
         try {
@@ -71,7 +76,7 @@ public class NetworkUtils {
     public static URL buildTrailerUrl(String moiveID) {
 
 
-        Uri builtUri = Uri.parse(TRAILER_MOVIE_DB_URL).buildUpon().appendPath(moiveID).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+        Uri builtUri = Uri.parse(TRAILER_MOVIE_DB_URL).buildUpon().appendPath(moiveID).appendPath(VIDEO_PATH).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
 
         URL url = null;
         try {

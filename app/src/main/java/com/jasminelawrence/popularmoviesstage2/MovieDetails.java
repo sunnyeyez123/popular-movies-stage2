@@ -207,7 +207,7 @@ public class MovieDetails extends AppCompatActivity {
 
         } catch (JSONException e) {
 
-            Log.e("MainActivity", "Problem parsing the Movie Review JSON results", e);
+            Log.e("Movie Details", "Problem parsing the Movie Review JSON results", e);
 
         }
 
@@ -290,7 +290,7 @@ public class MovieDetails extends AppCompatActivity {
 
         } catch (JSONException e) {
 
-            Log.e("MainActivity", "Problem parsing the Movie Trailer JSON results", e);
+            Log.e("Movie Details", "Problem parsing the Movie Trailer JSON results", e);
 
         }
 
