@@ -168,7 +168,8 @@
                 android:paddingLeft="8dp"
 
                 android:paddingBottom="10dp"
-                android:text="Trailers"
+                android:text="@string/trailers_label"
+
                 style="@style/LabelTextStyle"
                 />
 
@@ -184,7 +185,8 @@
                 android:paddingLeft="8dp"
 
                 android:paddingBottom="10dp"
-                android:text="Reviews"
+                android:text="@string/reviews_label"
+
                 style="@style/LabelTextStyle"
                 />
 

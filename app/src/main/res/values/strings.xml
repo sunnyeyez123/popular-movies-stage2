@@ -14,9 +14,13 @@
 
     <string name="sort_by_popular">Sort by Popularity</string>
     <string name="sort_by_rating">Sort by User Rating</string>
+    <string name="sort_by_favorite">View Favorites</string>
+
 
     <string name="popular_filter">popular</string>
     <string name="rating_filter">top_rated</string>
+    <string name="favorite_filter">favorite</string>
+
 
 
     <!-- Details Labels -->
@@ -28,6 +32,10 @@
     <string name="release_date_label">Release Date</string>
 
     <string name="plot_synopsis_label">Plot Synopsis</string>
+
+    <string name="reviews_label">Review</string>
+
+    <string name="trailers_label">Trailers</string>
 
 
 
