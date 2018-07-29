@@ -134,7 +134,7 @@
 
 
         </ListView>
-        
+
 
         <ListView
             android:id="@+id/review_list"
