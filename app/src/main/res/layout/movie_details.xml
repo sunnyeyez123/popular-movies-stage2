@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -84,9 +85,9 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="144dp"
             android:layout_marginTop="16dp"
-            android:paddingLeft="8dp"
             android:text="@string/user_rating_label"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/release_date_label_tv"
             app:layout_constraintTop_toBottomOf="@+id/original_title_tv" />
 
@@ -106,7 +107,7 @@
             style="@style/LabelTextStyle"
 
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
@@ -140,7 +141,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="10dp"
                 android:text="Reviews"
-                android:textStyle="bold" />
+                style="@style/LabelTextStyle"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/review_list"
@@ -154,7 +156,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="10dp"
                 android:text="Trailers"
-                android:textStyle="bold" />
+                style="@style/LabelTextStyle"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/trailer_list"
