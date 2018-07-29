@@ -149,6 +149,7 @@ public class MovieDetails extends AppCompatActivity {
                 // Add the new trailer to the list of movies
                 trailerList.add(movieTrailer);
 
+
             }
 
         } catch (JSONException e) {
@@ -160,6 +161,7 @@ public class MovieDetails extends AppCompatActivity {
         // Return the list of movies
         return trailerList;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +190,6 @@ public class MovieDetails extends AppCompatActivity {
 
             movieID = String.valueOf(movie.getID());
 
-            Toast.makeText(MovieDetails.this, "Got a movie" + movieID, Toast.LENGTH_SHORT).show();
 
             String poster_image = movie.getPosterImage();
 
@@ -223,22 +224,15 @@ public class MovieDetails extends AppCompatActivity {
                 ratingTextView.setText(user_rating);
             }
 
-            Toast.makeText(MovieDetails.this, "Getting Reviews", Toast.LENGTH_SHORT).show();
 
             getMovieReviews(movieID);
             getMovieTrailers(movieID);
 
 
-            if(mMovieReviewList != null  ){
-                Toast.makeText(MovieDetails.this, "We got some Reviews", Toast.LENGTH_SHORT).show();
-
-            }
-
-
-
-
-
         }
+
+
+
 
     }
 
@@ -246,8 +240,6 @@ public class MovieDetails extends AppCompatActivity {
 
 
         URL reviewURL = NetworkUtils.buildReviewUrl(movieID);
-
-        Toast.makeText(MovieDetails.this, String.valueOf(reviewURL), Toast.LENGTH_SHORT).show();
 
         new MovieReviewTask().execute(reviewURL);
 

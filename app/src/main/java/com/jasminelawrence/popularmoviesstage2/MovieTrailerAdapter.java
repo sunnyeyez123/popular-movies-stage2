@@ -2,6 +2,8 @@ package com.jasminelawrence.popularmoviesstage2;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,15 +37,37 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
     @Override
     public void onBindViewHolder(MovieTrailerAdapter.TrailerViewHolder viewHolder, int position) {
 
-        MovieTrailer trailer = movieTrailers.get(position);
+        final MovieTrailer trailer = movieTrailers.get(position);
 
         if(trailer != null) {
 
 
             viewHolder.trailerNameView.setText(trailer.getName());
 
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+
+                    playTrailer(context, trailer.getKey());
+
+                }
+            });
+
         }
 
+    }
+
+
+
+    private static void playTrailer(Context context, String trailerKey) {
+        Uri youtubeLink = Uri.parse(NetworkUtils.YOUTUBE_BASE_PATH + trailerKey);
+        Intent intent = new Intent(Intent.ACTION_VIEW, youtubeLink);
+
+        // If there is an app to handle the intent
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        }
     }
 
     @Override
@@ -54,9 +78,12 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
     public class TrailerViewHolder extends RecyclerView.ViewHolder {
         private TextView trailerNameView;
 
+        public final View mView;
+
 
         public TrailerViewHolder(View view) {
             super(view);
+            mView = view;
             trailerNameView = (TextView) view.findViewById(R.id.tailer_name_tv);
 
 

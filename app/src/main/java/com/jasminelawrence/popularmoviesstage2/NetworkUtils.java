@@ -32,6 +32,8 @@ public class NetworkUtils {
     private final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
     private final static String REVIEW_MOVIE_DB_URL = "https://api.themoviedb.org/3/movie/";
     private final static String TRAILER_MOVIE_DB_URL = "https://api.themoviedb.org/3/movie/";
+    public static final String YOUTUBE_BASE_PATH = "https://www.youtube.com/watch?v=";
+
 
     private final static String API_KEY_PARAM = "api_key";
     private final static String API_KEY = BuildConfig.API_KEY;
