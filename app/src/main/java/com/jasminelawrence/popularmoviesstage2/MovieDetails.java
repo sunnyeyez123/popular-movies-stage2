@@ -44,9 +44,9 @@ public class MovieDetails extends AppCompatActivity {
     @BindView(R.id.trailer_list)
     ListView movieTrailerListView;
 
-    private MovieReviewAdapter mMovieReviewAdapter;
+  //  private MovieReviewAdapter mMovieReviewAdapter;
 
-    private MovieTrailerAdapter mMovieTrailerAdapter;
+   // private MovieTrailerAdapter mMovieTrailerAdapter;
 
 
     private ArrayList<MovieReview> mMovieReviewList;
@@ -74,9 +74,6 @@ public class MovieDetails extends AppCompatActivity {
         } else {
 
             movieID = String.valueOf(movie.getID());
-
-            getMovieReviews(movieID);
-            getMovieReviews(movieID);
 
             String poster_image = movie.getPosterImage();
 
@@ -110,6 +107,9 @@ public class MovieDetails extends AppCompatActivity {
 
                 ratingTextView.setText(user_rating);
             }
+
+            getMovieReviews(movieID);
+            getMovieTrailers(movieID);
 
         }
 
@@ -154,7 +154,7 @@ public class MovieDetails extends AppCompatActivity {
         protected void onPostExecute(Void v) {
 
             movie.setReviews(mMovieReviewList);
-            mMovieReviewAdapter = new MovieReviewAdapter(MovieDetails.this, mMovieReviewList);
+            MovieReviewAdapter mMovieReviewAdapter = new MovieReviewAdapter(MovieDetails.this, mMovieReviewList);
             movieReviewListView.setAdapter(mMovieReviewAdapter);
 
         }
@@ -236,7 +236,7 @@ public class MovieDetails extends AppCompatActivity {
         protected void onPostExecute(Void v) {
 
             movie.setTrailers(mMovieTrailerList);
-            mMovieTrailerAdapter = new MovieTrailerAdapter(MovieDetails.this, mMovieTrailerList);
+            MovieTrailerAdapter mMovieTrailerAdapter = new MovieTrailerAdapter(MovieDetails.this, mMovieTrailerList);
             movieTrailerListView.setAdapter(mMovieTrailerAdapter);
 
         }

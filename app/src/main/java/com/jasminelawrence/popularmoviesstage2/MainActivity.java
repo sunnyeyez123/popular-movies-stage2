@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         // Get a reference to the GridView, and attach this adapter to it.
         //default filter
         filter = getResources().getString(R.string.popular_filter);
-        movieSearch(filter);
 
+        if (isConnected) {
+
+            movieSearch(filter);
+        }
 
         // Set an item click listener on the GridView to open the details page when a movie is selected
         movieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
