@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
                 //user rating
                 filter = getResources().getString(R.string.rating_filter);
                 movieSearch(filter);
+                return true;
+
+            case R.id.favorite_sort:
+                //user rating
+                filter = getResources().getString(R.string.favorite_filter);
+                //TODO read from DB
+
+                Toast.makeText(MainActivity.this,
+                        "Showing favorites", Toast.LENGTH_SHORT).show();
                 return true;
         }
 

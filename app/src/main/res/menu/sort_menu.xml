@@ -17,8 +17,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/top_rated_sort"
+        android:id="@+id/favorite_sort"
         android:orderInCategory="2"
-        android:title="@string/sort_by_rating"
+        android:title="@string/sort_by_favorite"
         app:showAsAction="never" />
 </menu>
