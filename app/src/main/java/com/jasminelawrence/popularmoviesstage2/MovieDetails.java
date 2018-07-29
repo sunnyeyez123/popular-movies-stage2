@@ -7,9 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
+
 
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +42,7 @@ public class MovieDetails extends AppCompatActivity {
     ImageView iconView;
 
 
+    private ImageButton favoriteButton;
     private RecyclerView movieReviewListView;
 
 
@@ -233,10 +238,48 @@ public class MovieDetails extends AppCompatActivity {
 
 
 
+        createFavoriteButtonClickListener();
+
 
     }
 
-    private void getMovieReviews(String movieID) {
+
+    private void createFavoriteButtonClickListener() {
+
+
+         favoriteButton = (ImageButton) findViewById(R.id.favorite_btn);
+
+        favoriteButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Toast.makeText(MovieDetails.this,
+                        "ImageButton is clicked!", Toast.LENGTH_SHORT).show();
+
+                if(movie.isFavorite()){       //unmark as favorite (change icon and remove from db)
+
+              //      favoriteButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
+                    favoriteButton.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    movie.setIsFavorite(false);
+
+
+                }else{                  //mark as favorite (change icon and add to db)
+             //       favoriteButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
+                    favoriteButton.setImageResource(R.drawable.ic_star_black_24dp);
+
+                    movie.setIsFavorite(true);
+
+
+                }
+
+
+            }
+
+        });
+    }
+
+        private void getMovieReviews(String movieID) {
 
 
         URL reviewURL = NetworkUtils.buildReviewUrl(movieID);
