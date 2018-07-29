@@ -75,8 +75,8 @@ public class Movie implements Parcelable {
         mUserRating = in.readDouble();
         mReleaseDate = in.readString();
         mID = in.readDouble();
-        mReviews = in.createTypedArrayList(MovieReview.CREATOR);
-        mTrailers = in.createTypedArrayList(MovieTrailer.CREATOR);
+
+
         mIsFavorite = in.readByte() != 0;
 
 
@@ -132,8 +132,6 @@ public class Movie implements Parcelable {
         parcel.writeString(mReleaseDate);
         parcel.writeDouble(mUserRating);
         parcel.writeDouble(mID);
-        parcel.writeTypedList(mReviews);
-        parcel.writeTypedList(mTrailers);
         parcel.writeByte((byte) (mIsFavorite ? 1 : 0));
 
 
