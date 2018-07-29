@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 public class MovieReviewAdapter extends ArrayAdapter<MovieReview> {
 
 
-    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
+    private static final String LOG_TAG = MovieReviewAdapter.class.getSimpleName();
 
     @BindView(R.id.review_author_tv)
     TextView authorNameView;

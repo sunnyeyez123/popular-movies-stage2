@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 public class MovieTrailerAdapter extends ArrayAdapter<MovieTrailer> {
 
 
-    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
+    private static final String LOG_TAG = MovieTrailerAdapter.class.getSimpleName();
 
     @BindView(R.id.review_author_tv)
     TextView trailerNameView;
