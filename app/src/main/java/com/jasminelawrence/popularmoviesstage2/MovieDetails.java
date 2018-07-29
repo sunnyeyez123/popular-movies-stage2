@@ -5,26 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.MeasureSpec;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,7 +33,6 @@ public class MovieDetails extends AppCompatActivity {
     ImageView iconView;
 
 
-
     ListView movieReviewListView;
 
 
@@ -58,7 +48,113 @@ public class MovieDetails extends AppCompatActivity {
     private String movieID;
     private Movie movie;
 
+    private static ArrayList<MovieReview> extractReviewFeatureFromJson(String MovieReviewsJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(MovieReviewsJSON)) {
+            return null;
+        }
 
+        // Create an empty ArrayList that we can start adding movies
+        ArrayList<MovieReview> reviewList = new ArrayList<>();
+
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+
+            // Create a JSONObject from the JSON response string
+            JSONObject baseJsonResponse = new JSONObject(MovieReviewsJSON);
+
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of items (or reviews).
+
+            JSONArray reviewsArray = baseJsonResponse.getJSONArray("results");
+
+            // For each Movie in the MovieReviewArray, create an Movie reivew object
+            for (int i = 0; i < reviewsArray.length(); i++) {
+
+                // Get a single movie at position i within the list of reviews
+                JSONObject currentReview = reviewsArray.getJSONObject(i);
+
+                //get the relevant information about the review
+                String author = currentReview.getString("author");
+
+                String content = currentReview.getString("content");
+
+
+                // Create a new Review object with the information
+                MovieReview movieReview = new MovieReview(author, content);
+
+                // Add the new movie to the list of movies
+                reviewList.add(movieReview);
+
+            }
+
+        } catch (JSONException e) {
+
+            Log.e("Movie Details", "Problem parsing the Movie Review JSON results", e);
+
+        }
+
+        // Return the list of movies
+        return reviewList;
+    }
+
+    private static ArrayList<MovieTrailer> extractTrailerFeatureFromJson(String MovieTrailerJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(MovieTrailerJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding movies
+        ArrayList<MovieTrailer> trailerList = new ArrayList<>();
+
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+
+            // Create a JSONObject from the JSON response string
+            JSONObject baseJsonResponse = new JSONObject(MovieTrailerJSON);
+
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of items (or trailers).
+
+            JSONArray reviewsArray = baseJsonResponse.getJSONArray("results");
+
+            // For each Movie in the TrailerArray, create an Trailer object
+            for (int i = 0; i < reviewsArray.length(); i++) {
+
+                // Get a single trailer at position i within the list of Movies
+                JSONObject currentReview = reviewsArray.getJSONObject(i);
+
+                //get the relevant information about the trailer
+                String name = currentReview.getString("name");
+
+                String video_key = currentReview.getString("key");
+
+
+                // Create a new trailer object with the information
+                MovieTrailer movieTrailer = new MovieTrailer(name, video_key);
+
+                // Add the new trailer to the list of movies
+                trailerList.add(movieTrailer);
+
+            }
+
+        } catch (JSONException e) {
+
+            Log.e("Movie Details", "Problem parsing the Movie Trailer JSON results", e);
+
+        }
+
+        // Return the list of movies
+        return trailerList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +163,9 @@ public class MovieDetails extends AppCompatActivity {
         ButterKnife.bind(this);
         Bundle data = getIntent().getExtras();
 
-         movieReviewListView = (ListView)findViewById(R.id.review_list);
-         movieTrailerListView = (ListView)findViewById(R.id.trailer_list);
+        movieReviewListView = (ListView) findViewById(R.id.review_list);
+        movieTrailerListView = (ListView) findViewById(R.id.trailer_list);
 
-
-
-        ListUtils.setDynamicHeight(movieReviewListView);
-        ListUtils.setDynamicHeight(movieTrailerListView);
 
         mMovieReviewList = new ArrayList<>();
         mMovieTrailerList = new ArrayList<>();
@@ -160,6 +252,8 @@ public class MovieDetails extends AppCompatActivity {
             try {
                 movieReviewResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 mMovieReviewList = extractReviewFeatureFromJson(movieReviewResults);
+                Toast.makeText(MovieDetails.this, "got Reviews", Toast.LENGTH_SHORT).show();
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -171,66 +265,15 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void v) {
 
+            Toast.makeText(MovieDetails.this, "show Reviews", Toast.LENGTH_SHORT).show();
+
             movie.setReviews(mMovieReviewList);
             mMovieReviewAdapter = new MovieReviewAdapter(MovieDetails.this, mMovieReviewList);
             movieReviewListView.setAdapter(mMovieReviewAdapter);
 
-        }
-
-    }
-
-    private static ArrayList<MovieReview> extractReviewFeatureFromJson(String MovieReviewsJSON) {
-        // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(MovieReviewsJSON)) {
-            return null;
-        }
-
-        // Create an empty ArrayList that we can start adding movies
-        ArrayList<MovieReview> reviewList = new ArrayList<>();
-
-
-        // Try to parse the JSON response string. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
-        try {
-
-
-            // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(MovieReviewsJSON);
-
-            // Extract the JSONArray associated with the key called "results",
-            // which represents a list of items (or reviews).
-
-            JSONArray reviewsArray = baseJsonResponse.getJSONArray("results");
-
-            // For each Movie in the MovieReviewArray, create an Movie reivew object
-            for (int i = 0; i < reviewsArray.length(); i++) {
-
-                // Get a single movie at position i within the list of reviews
-                JSONObject currentReview = reviewsArray.getJSONObject(i);
-
-                //get the relevant information about the review
-                String author = currentReview.getString("author");
-
-                String content = currentReview.getString("content");
-
-
-                // Create a new Review object with the information
-                MovieReview movieReview = new MovieReview(author, content);
-
-                // Add the new movie to the list of movies
-                reviewList.add(movieReview);
-
-            }
-
-        } catch (JSONException e) {
-
-            Log.e("Movie Details", "Problem parsing the Movie Review JSON results", e);
 
         }
 
-        // Return the list of movies
-        return reviewList;
     }
 
     private class MovieTrailerTask extends AsyncTask<URL, Void, Void> {
@@ -254,89 +297,11 @@ public class MovieDetails extends AppCompatActivity {
         protected void onPostExecute(Void v) {
 
             movie.setTrailers(mMovieTrailerList);
-            mMovieTrailerAdapter = new MovieTrailerAdapter(MovieDetails.this ,mMovieTrailerList);
+            mMovieTrailerAdapter = new MovieTrailerAdapter(MovieDetails.this, mMovieTrailerList);
             movieTrailerListView.setAdapter(mMovieTrailerAdapter);
 
-
         }
 
-    }
-
-
-    private static ArrayList<MovieTrailer> extractTrailerFeatureFromJson(String MovieTrailerJSON) {
-        // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(MovieTrailerJSON)) {
-            return null;
-        }
-
-        // Create an empty ArrayList that we can start adding movies
-        ArrayList<MovieTrailer> trailerList = new ArrayList<>();
-
-
-        // Try to parse the JSON response string. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
-        try {
-
-
-            // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(MovieTrailerJSON);
-
-            // Extract the JSONArray associated with the key called "results",
-            // which represents a list of items (or trailers).
-
-            JSONArray reviewsArray = baseJsonResponse.getJSONArray("results");
-
-            // For each Movie in the TrailerArray, create an Trailer object
-            for (int i = 0; i < reviewsArray.length(); i++) {
-
-                // Get a single trailer at position i within the list of Movies
-                JSONObject currentReview = reviewsArray.getJSONObject(i);
-
-                //get the relevant information about the trailer
-                String name = currentReview.getString("name");
-
-                String video_key = currentReview.getString("key");
-
-
-                // Create a new trailer object with the information
-               MovieTrailer movieTrailer = new MovieTrailer(name, video_key);
-
-                // Add the new trailer to the list of movies
-                trailerList.add(movieTrailer);
-
-            }
-
-        } catch (JSONException e) {
-
-            Log.e("Movie Details", "Problem parsing the Movie Trailer JSON results", e);
-
-        }
-
-        // Return the list of movies
-        return trailerList;
-    }
-
-
-    public static class ListUtils {
-        public static void setDynamicHeight(ListView mListView) {
-            ListAdapter mListAdapter = mListView.getAdapter();
-            if (mListAdapter == null) {
-                // when adapter is null
-                return;
-            }
-            int height = 0;
-            int desiredWidth = MeasureSpec.makeMeasureSpec(mListView.getWidth(), MeasureSpec.UNSPECIFIED);
-            for (int i = 0; i < mListAdapter.getCount(); i++) {
-                View listItem = mListAdapter.getView(i, null, mListView);
-                listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
-                height += listItem.getMeasuredHeight();
-            }
-            ViewGroup.LayoutParams params = mListView.getLayoutParams();
-            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
-            mListView.setLayoutParams(params);
-            mListView.requestLayout();
-        }
     }
 
 
