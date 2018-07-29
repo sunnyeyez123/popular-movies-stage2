@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,84 +22,27 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    @BindView(R.id.movies_gridview)
+    GridView movieListView;
 
     private MovieAdapter mMovieAdapter;
     private ArrayList<Movie> mMovieList;
-    private GridView movieListView;
     private String filter;
     private boolean isConnected;
 
 
 
-    private static ArrayList<Movie> extractFeatureFromJson(String MoviesJSON) {
-        // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(MoviesJSON)) {
-            return null;
-        }
-
-        // Create an empty ArrayList that we can start adding movies
-        ArrayList<Movie> movieList = new ArrayList<>();
-
-
-        // Try to parse the JSON response string. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
-        try {
-
-
-            // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(MoviesJSON);
-
-            // Extract the JSONArray associated with the key called "results",
-            // which represents a list of items (or movies).
-
-            JSONArray moviesArray = baseJsonResponse.getJSONArray("results");
-
-            // For each Movie in the MovieArray, create an Movie object
-            for (int i = 0; i < moviesArray.length(); i++) {
-
-                // Get a single movie at position i within the list of Movies
-                JSONObject currentMovie = moviesArray.getJSONObject(i);
-
-                //get the relevant information about the movie
-                String original_title = currentMovie.getString("original_title");
-
-                String plot_synopsis = currentMovie.getString("overview");
-
-                //TODO format the date
-                String release_date = currentMovie.getString("release_date");
-
-                String poster_path = currentMovie.getString("poster_path");
-                String poster_url = "http://image.tmdb.org/t/p/w185/" + poster_path;
-
-                double user_rating = currentMovie.getDouble("vote_average");
-                double id = currentMovie.getDouble("id");
-
-
-                // Create a new Movie object with the infromation
-                Movie movie = new Movie(id, original_title, poster_url, plot_synopsis, user_rating, release_date);
-
-
-                // Add the new movie to the list of movies
-                movieList.add(movie);
-
-            }
-
-        } catch (JSONException e) {
-
-            Log.e("MainActivity", "Problem parsing the Article JSON results", e);
-
-        }
-
-        // Return the list of movies
-        return movieList;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         ConnectivityManager cm =
                 (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -109,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         mMovieList = new ArrayList<>();
 
+
         // Get a reference to the GridView, and attach this adapter to it.
-        movieListView = findViewById(R.id.movies_gridview);
         //default filter
         filter = getResources().getString(R.string.popular_filter);
         movieSearch(filter);
@@ -134,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void movieSearch(String filter) {
 
-        if(true){
+
             URL movieURL = NetworkUtils.buildUrl(filter);
             new MovieSearchTask().execute(movieURL);
-        }
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -198,6 +143,72 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private static ArrayList<Movie> extractFeatureFromJson(String MoviesJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(MoviesJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding movies
+        ArrayList<Movie> movieList = new ArrayList<>();
+
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+
+            // Create a JSONObject from the JSON response string
+            JSONObject baseJsonResponse = new JSONObject(MoviesJSON);
+
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of items (or movies).
+
+            JSONArray moviesArray = baseJsonResponse.getJSONArray("results");
+
+            // For each Movie in the MovieArray, create an Movie object
+            for (int i = 0; i < moviesArray.length(); i++) {
+
+                // Get a single movie at position i within the list of Movies
+                JSONObject currentMovie = moviesArray.getJSONObject(i);
+
+                //get the relevant information about the movie
+                String original_title = currentMovie.getString("original_title");
+
+                String plot_synopsis = currentMovie.getString("overview");
+
+                //TODO format the date
+                String release_date = currentMovie.getString("release_date");
+
+                String poster_path = currentMovie.getString("poster_path");
+                String poster_url = "http://image.tmdb.org/t/p/w185/" + poster_path;
+
+                double user_rating = currentMovie.getDouble("vote_average");
+                double id = currentMovie.getDouble("id");
+
+                // Create a new Movie object with the infromation
+                Movie movie = new Movie(id, original_title, poster_url, plot_synopsis, user_rating, release_date, null, null);
+
+
+                // Add the new movie to the list of movies
+                movieList.add(movie);
+
+            }
+
+        } catch (JSONException e) {
+
+            Log.e("MainActivity", "Problem parsing the Article JSON results", e);
+
+        }
+
+        // Return the list of movies
+        return movieList;
+    }
+
+
+
 
 
 }

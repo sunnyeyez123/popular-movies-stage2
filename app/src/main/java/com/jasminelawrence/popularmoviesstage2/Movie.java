@@ -36,10 +36,22 @@ public class Movie implements Parcelable {
     private double mID;
     private ArrayList<MovieReview> mReviews;
     private ArrayList<MovieTrailer> mTrailers;
-    private boolean mIsFavorite;
+    private boolean mIsFavorite = false;
 
 
-    public Movie(double id, String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate, ArrayList<MovieReview> reviews, ArrayList<MovieTrailer> trailers, boolean isFavorite) {
+    public void setReviews(ArrayList<MovieReview> mReviews) {
+        this.mReviews = mReviews;
+    }
+
+    public void setTrailers(ArrayList<MovieTrailer> mTrailers) {
+        this.mTrailers = mTrailers;
+    }
+
+    public void setIsFavorite(boolean mIsFavorite) {
+        this.mIsFavorite = mIsFavorite;
+    }
+
+    public Movie(double id, String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate, ArrayList<MovieReview> reviews, ArrayList<MovieTrailer> trailers) {
         mOriginalTitle = originalTitle;
         mPosterImage = posterImage;
         mPlotSynopsis = plotSynopsis;
@@ -48,7 +60,7 @@ public class Movie implements Parcelable {
         mID = id;
         mReviews = reviews;
         mTrailers = trailers;
-        mIsFavorite = isFavorite;
+
 
     }
 
