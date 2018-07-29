@@ -30,6 +30,9 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     private final static String BASE_MOVIE_DB_URL = "http://api.themoviedb.org/3/movie/";
+    private final static String REVIEW_MOVIE_DB_URL = "https://api.themoviedb.org/3/movie/";
+    private final static String TRAILER_MOVIE_DB_URL = "https://api.themoviedb.org/3/movie/";
+
     private final static String API_KEY_PARAM = "api_key";
     private final static String API_KEY = BuildConfig.API_KEY;
 
@@ -39,6 +42,36 @@ public class NetworkUtils {
 
 
         Uri builtUri = Uri.parse(BASE_MOVIE_DB_URL).buildUpon().appendPath(filter).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public static URL buildReviewUrl(String movieID) {
+
+
+        Uri builtUri = Uri.parse(REVIEW_MOVIE_DB_URL).buildUpon().appendPath(movieID).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public static URL buildTrailerUrl(String moiveID) {
+
+
+        Uri builtUri = Uri.parse(TRAILER_MOVIE_DB_URL).buildUpon().appendPath(moiveID).appendQueryParameter(API_KEY_PARAM, API_KEY).build();
 
         URL url = null;
         try {
