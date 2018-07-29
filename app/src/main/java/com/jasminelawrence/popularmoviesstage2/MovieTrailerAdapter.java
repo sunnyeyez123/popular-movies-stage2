@@ -1,45 +1,65 @@
 package com.jasminelawrence.popularmoviesstage2;
 
-import android.app.Activity;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapter.TrailerViewHolder> {
 
-public class MovieTrailerAdapter extends ArrayAdapter<MovieTrailer> {
+    private ArrayList<MovieTrailer> movieTrailers;
+    private Context mContext;
+    private int mNumItems;
 
-
-    private static final String LOG_TAG = MovieTrailerAdapter.class.getSimpleName();
-
-    @BindView(R.id.review_author_tv)
-    TextView trailerNameView;
-
-
-    public MovieTrailerAdapter(Activity context, List<MovieTrailer> trailers) {
-        super(context, 0, trailers);
+    public MovieTrailerAdapter(ArrayList<MovieTrailer> trailers, int numItems, Context context) {
+        mContext = context;
+        mNumItems = numItems;
+        movieTrailers = trailers;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the review from the ArrayAdapter at the selected position
-        MovieTrailer trailer = getItem(position);
+    public MovieTrailerAdapter.TrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LinearLayout view = (LinearLayout) layoutInflater.inflate(R.layout.trailer_list_item, parent, false);
+
+        return new TrailerViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MovieTrailerAdapter.TrailerViewHolder viewHolder, int position) {
+
+        MovieTrailer trailer = movieTrailers.get(position);
+
+        if(trailer != null) {
 
 
-        //reuse the old views if you have them
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.trailer_list_item, parent, false);
-            ButterKnife.bind(this, convertView);
+            viewHolder.trailerNameView.setText(trailer.getName());
 
         }
 
-        //display the content name
-        trailerNameView.setText(trailer.getName());
-        return convertView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return  mNumItems;
+    }
+
+    public class TrailerViewHolder extends RecyclerView.ViewHolder {
+        private TextView trailerNameView;
+
+
+        public TrailerViewHolder(View view) {
+            super(view);
+            trailerNameView = (TextView) view.findViewById(R.id.tailer_name_tv);
+
+
+        }
     }
 }

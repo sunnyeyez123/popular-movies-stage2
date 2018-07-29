@@ -3,19 +3,24 @@ package com.jasminelawrence.popularmoviesstage2;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,10 +38,10 @@ public class MovieDetails extends AppCompatActivity {
     ImageView iconView;
 
 
-    ListView movieReviewListView;
+    private RecyclerView movieReviewListView;
 
 
-    ListView movieTrailerListView;
+    private RecyclerView movieTrailerListView;
 
     private MovieReviewAdapter mMovieReviewAdapter;
 
@@ -163,12 +168,16 @@ public class MovieDetails extends AppCompatActivity {
         ButterKnife.bind(this);
         Bundle data = getIntent().getExtras();
 
-        movieReviewListView = (ListView) findViewById(R.id.review_list);
-        movieTrailerListView = (ListView) findViewById(R.id.trailer_list);
+        movieReviewListView = findViewById(R.id.review_list);
+        movieTrailerListView = findViewById(R.id.trailer_list);
 
+        //create and set layout manager for each RecyclerView
+        RecyclerView.LayoutManager reviewLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager trailerLayoutManager = new LinearLayoutManager(this);
 
-        mMovieReviewList = new ArrayList<>();
-        mMovieTrailerList = new ArrayList<>();
+        movieReviewListView.setLayoutManager(reviewLayoutManager);
+        movieTrailerListView.setLayoutManager(trailerLayoutManager);
+
 
         movie = data.getParcelable("theMovieDetails");
 
@@ -177,9 +186,9 @@ public class MovieDetails extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(MovieDetails.this, "Got a movie", Toast.LENGTH_SHORT).show();
-
             movieID = String.valueOf(movie.getID());
+
+            Toast.makeText(MovieDetails.this, "Got a movie" + movieID, Toast.LENGTH_SHORT).show();
 
             String poster_image = movie.getPosterImage();
 
@@ -217,9 +226,17 @@ public class MovieDetails extends AppCompatActivity {
             Toast.makeText(MovieDetails.this, "Getting Reviews", Toast.LENGTH_SHORT).show();
 
             getMovieReviews(movieID);
-            Toast.makeText(MovieDetails.this, "Getting Trailers", Toast.LENGTH_SHORT).show();
-
             getMovieTrailers(movieID);
+
+
+            if(mMovieReviewList != null  ){
+                Toast.makeText(MovieDetails.this, "We got some Reviews", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+
+
 
         }
 
@@ -229,6 +246,9 @@ public class MovieDetails extends AppCompatActivity {
 
 
         URL reviewURL = NetworkUtils.buildReviewUrl(movieID);
+
+        Toast.makeText(MovieDetails.this, String.valueOf(reviewURL), Toast.LENGTH_SHORT).show();
+
         new MovieReviewTask().execute(reviewURL);
 
 
@@ -249,10 +269,11 @@ public class MovieDetails extends AppCompatActivity {
         protected Void doInBackground(URL... params) {
             URL searchUrl = params[0];
             String movieReviewResults;
+
             try {
+
                 movieReviewResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 mMovieReviewList = extractReviewFeatureFromJson(movieReviewResults);
-                Toast.makeText(MovieDetails.this, "got Reviews", Toast.LENGTH_SHORT).show();
 
 
             } catch (IOException e) {
@@ -265,12 +286,12 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void v) {
 
-            Toast.makeText(MovieDetails.this, "show Reviews", Toast.LENGTH_SHORT).show();
 
-            movie.setReviews(mMovieReviewList);
-            mMovieReviewAdapter = new MovieReviewAdapter(MovieDetails.this, mMovieReviewList);
-            movieReviewListView.setAdapter(mMovieReviewAdapter);
+            if (mMovieReviewList != null && mMovieReviewList.size() > 0) {
 
+                mMovieReviewAdapter = new MovieReviewAdapter(mMovieReviewList, mMovieReviewList.size(), MovieDetails.this);
+                movieReviewListView.setAdapter(mMovieReviewAdapter);
+            }
 
         }
 
@@ -296,9 +317,11 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void v) {
 
-            movie.setTrailers(mMovieTrailerList);
-            mMovieTrailerAdapter = new MovieTrailerAdapter(MovieDetails.this, mMovieTrailerList);
-            movieTrailerListView.setAdapter(mMovieTrailerAdapter);
+            if (mMovieTrailerList != null && mMovieTrailerList.size() > 0) {
+
+                mMovieTrailerAdapter = new MovieTrailerAdapter(mMovieTrailerList, mMovieTrailerList.size(), MovieDetails.this);
+                movieTrailerListView.setAdapter(mMovieTrailerAdapter);
+            }
 
         }
 

@@ -37,8 +37,8 @@ public class NetworkUtils {
     private final static String API_KEY = BuildConfig.API_KEY;
 
 
-    private final static String REVIEW_PATH = "review";
-    private final static String VIDEO_PATH = "movies";
+    private final static String REVIEW_PATH = "reviews";
+    private final static String VIDEO_PATH = "videos";
 
 
 

@@ -33,7 +33,7 @@ public class Movie implements Parcelable {
     private String mPlotSynopsis;
     private double mUserRating;
     private String mReleaseDate;
-    private double mID;
+    private int mID;
     private ArrayList<MovieReview> mReviews;
     private ArrayList<MovieTrailer> mTrailers;
     private boolean mIsFavorite = false;
@@ -51,7 +51,7 @@ public class Movie implements Parcelable {
         this.mIsFavorite = mIsFavorite;
     }
 
-    public Movie(double id, String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate, ArrayList<MovieReview> reviews, ArrayList<MovieTrailer> trailers) {
+    public Movie(int id, String originalTitle, String posterImage, String plotSynopsis, double userRating, String releaseDate, ArrayList<MovieReview> reviews, ArrayList<MovieTrailer> trailers) {
         mOriginalTitle = originalTitle;
         mPosterImage = posterImage;
         mPlotSynopsis = plotSynopsis;
@@ -74,9 +74,7 @@ public class Movie implements Parcelable {
         mPlotSynopsis = in.readString();
         mUserRating = in.readDouble();
         mReleaseDate = in.readString();
-        mID = in.readDouble();
-
-
+        mID = in.readInt();
         mIsFavorite = in.readByte() != 0;
 
 
@@ -106,7 +104,7 @@ public class Movie implements Parcelable {
         return mReleaseDate;
     }
 
-    public double getID() {
+    public int getID() {
         return mID;
     }
 
@@ -130,8 +128,7 @@ public class Movie implements Parcelable {
         parcel.writeString(mPlotSynopsis);
         parcel.writeDouble(mUserRating);
         parcel.writeString(mReleaseDate);
-        parcel.writeDouble(mUserRating);
-        parcel.writeDouble(mID);
+        parcel.writeInt(mID);
         parcel.writeByte((byte) (mIsFavorite ? 1 : 0));
 
 
