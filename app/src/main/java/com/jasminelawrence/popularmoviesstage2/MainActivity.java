@@ -73,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 String poster_url = "http://image.tmdb.org/t/p/w185/" + poster_path;
 
                 double user_rating = currentMovie.getDouble("vote_average");
+                double id = currentMovie.getDouble("id");
+
 
                 // Create a new Movie object with the infromation
-                Movie movie = new Movie(original_title, poster_url, plot_synopsis, user_rating, release_date);
+                Movie movie = new Movie(id, original_title, poster_url, plot_synopsis, user_rating, release_date);
 
 
                 // Add the new movie to the list of movies
