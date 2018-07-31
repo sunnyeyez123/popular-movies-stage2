@@ -189,7 +189,7 @@ public class MovieDetails extends AppCompatActivity {
         movie = data.getParcelable("theMovieDetails");
 
         if (movie == null) {
-            Toast.makeText(MovieDetails.this, "No movie data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MovieDetails.this, "No movie com.jasminelawrence.popularmoviesstage2.data", Toast.LENGTH_SHORT).show();
 
         } else {
 
