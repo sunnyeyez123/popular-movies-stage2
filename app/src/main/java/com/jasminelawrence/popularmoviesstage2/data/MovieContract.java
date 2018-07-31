@@ -25,7 +25,7 @@ public class MovieContract {
     public static final String PATH_MOVIES = "movies";
 
     /* MovieEntry is an inner class that defines the contents of the task table */
-    public static final class MovieEntry implements BaseColumns {
+    public static final class MoviesEntry implements BaseColumns {
 
         // MovieEntry content URI = base content URI + path
         public static final Uri CONTENT_URI =
