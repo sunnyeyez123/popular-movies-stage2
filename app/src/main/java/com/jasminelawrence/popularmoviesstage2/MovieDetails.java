@@ -267,6 +267,17 @@ public class MovieDetails extends AppCompatActivity {
                     //TODO remove movie from DB
 
 
+                    int id = movie.getID();
+
+                    // Build appropriate uri with String row id appended
+                    String stringId = Integer.toString(id);
+                    Uri uri = MovieContract.MoviesEntry.CONTENT_URI;
+                    uri = uri.buildUpon().appendPath(stringId).build();
+
+                    // COMPLETED (2) Delete a single row of data using a ContentResolver
+                    getContentResolver().delete(uri, null, null);
+
+
                 }else{                  //mark as favorite (change icon and add to db)
              //       favoriteButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
                     favoriteButton.setImageResource(R.drawable.ic_star_black_24dp);
