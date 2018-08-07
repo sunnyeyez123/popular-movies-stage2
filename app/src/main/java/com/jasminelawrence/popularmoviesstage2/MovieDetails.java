@@ -262,6 +262,7 @@ public class MovieDetails extends AppCompatActivity {
               //      favoriteButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
                     favoriteButton.setImageResource(R.drawable.ic_star_border_black_24dp);
                     movie.setIsFavorite(false);
+                    //TODO update DB
 
 
                 }else{                  //mark as favorite (change icon and add to db)
@@ -269,6 +270,8 @@ public class MovieDetails extends AppCompatActivity {
                     favoriteButton.setImageResource(R.drawable.ic_star_black_24dp);
 
                     movie.setIsFavorite(true);
+                    //TODO update DB
+
 
 
                 }

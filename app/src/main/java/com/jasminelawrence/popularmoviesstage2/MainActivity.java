@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 movieSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 mMovieList = extractFeatureFromJson(movieSearchResults);
+                //TODO put movies in the DB
 
             } catch (IOException e) {
                 e.printStackTrace();

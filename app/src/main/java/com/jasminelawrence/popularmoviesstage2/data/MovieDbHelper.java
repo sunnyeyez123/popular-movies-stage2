@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.jasminelawrence.popularmoviesstage2.data.MovieContract.MoviesEntry;
+
 public class MovieDbHelper extends SQLiteOpenHelper {
 
     // The name of the database
@@ -26,12 +28,12 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create tasks table (careful to follow SQL formatting rules)
-        final String CREATE_TABLE = "CREATE TABLE "  + MovieContract.MoviesEntry.TABLE_NAME + " (" +
-                MovieContract.MoviesEntry._ID                + " INTEGER PRIMARY KEY, " +
-                MovieContract.MoviesEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
-                MovieContract.MoviesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                MovieContract.MoviesEntry.COLUMN_BOX_ART_URL + " TEXT NOT NULL, " +
-                MovieContract.MoviesEntry.COLUMN_FAVORITE    + " BOOLEAN NOT NULL);";
+        final String CREATE_TABLE = "CREATE TABLE "  + MoviesEntry.TABLE_NAME + " (" +
+                MoviesEntry._ID                + " INTEGER PRIMARY KEY, " +
+                MoviesEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MoviesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                MoviesEntry.COLUMN_BOX_ART_URL + " TEXT NOT NULL, " +
+                MoviesEntry.COLUMN_FAVORITE    + " BOOLEAN NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -43,7 +45,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + MovieContract.MoviesEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MoviesEntry.TABLE_NAME);
         onCreate(db);
     }
 }
