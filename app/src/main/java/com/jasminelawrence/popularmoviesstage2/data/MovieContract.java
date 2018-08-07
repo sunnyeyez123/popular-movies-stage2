@@ -40,7 +40,6 @@ public class MovieContract {
         public static final String COLUMN_MOVIE_ID = "movieID";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_BOX_ART_URL = "boxart";
-        public static final String COLUMN_FAVORITE = "favorite";
 
 
     }

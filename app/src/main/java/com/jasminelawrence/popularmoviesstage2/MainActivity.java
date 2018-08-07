@@ -1,11 +1,9 @@
 package com.jasminelawrence.popularmoviesstage2;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
-
-import com.jasminelawrence.popularmoviesstage2.data.MovieContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void v) {
-            addMoviesToDB(mMovieList);
-            
             mMovieAdapter = new MovieAdapter(MainActivity.this, mMovieList);
             movieListView.setAdapter(mMovieAdapter);
 
@@ -165,30 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addMoviesToDB(ArrayList<Movie> movieList){
 
-
-        for(int i =0; i < movieList.size(); i++ ){
-
-            // Insert new task data via a ContentResolver
-            // Create new empty ContentValues object
-            ContentValues contentValues = new ContentValues();
-            // Put the task description and selected mPriority into the ContentValues
-            contentValues.put(MovieContract.MoviesEntry.COLUMN_NAME, movieList.get(i).getOriginalTitle());
-            contentValues.put(MovieContract.MoviesEntry.COLUMN_MOVIE_ID, movieList.get(i).getID());
-            contentValues.put(MovieContract.MoviesEntry.COLUMN_BOX_ART_URL, movieList.get(i).getPosterImage());
-            contentValues.put(MovieContract.MoviesEntry.COLUMN_FAVORITE, movieList.get(i).isFavorite());
-            // Insert the content values via a ContentResolver
-            Uri uri = getContentResolver().insert(MovieContract.MoviesEntry.CONTENT_URI, contentValues);
-            // Display the URI that's returned with a Toast
-            // [Hint] Don't forget to call finish() to return to MainActivity after this insert is complete
-            if(uri != null) {
-                Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-    }
 
     private static ArrayList<Movie> extractFeatureFromJson(String MoviesJSON) {
         // If the JSON string is empty or null, then return early.

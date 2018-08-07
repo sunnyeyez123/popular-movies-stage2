@@ -1,20 +1,22 @@
 package com.jasminelawrence.popularmoviesstage2;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
-
+import com.jasminelawrence.popularmoviesstage2.data.MovieContract;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -262,7 +264,7 @@ public class MovieDetails extends AppCompatActivity {
               //      favoriteButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
                     favoriteButton.setImageResource(R.drawable.ic_star_border_black_24dp);
                     movie.setIsFavorite(false);
-                    //TODO update DB
+                    //TODO remove movie from DB
 
 
                 }else{                  //mark as favorite (change icon and add to db)
@@ -270,7 +272,23 @@ public class MovieDetails extends AppCompatActivity {
                     favoriteButton.setImageResource(R.drawable.ic_star_black_24dp);
 
                     movie.setIsFavorite(true);
-                    //TODO update DB
+                    //TODO add movie to DB
+                        // Insert new task data via a ContentResolver
+                        // Create new empty ContentValues object
+                        ContentValues contentValues = new ContentValues();
+                        // Put the task description and selected mPriority into the ContentValues
+                        contentValues.put(MovieContract.MoviesEntry.COLUMN_NAME, movie.getOriginalTitle());
+                        contentValues.put(MovieContract.MoviesEntry.COLUMN_MOVIE_ID,movie.getID());
+                        contentValues.put(MovieContract.MoviesEntry.COLUMN_BOX_ART_URL,movie.getPosterImage());
+                        // Insert the content values via a ContentResolver
+                        Uri uri = getContentResolver().insert(MovieContract.MoviesEntry.CONTENT_URI, contentValues);
+                        // Display the URI that's returned with a Toast
+                        // [Hint] Don't forget to call finish() to return to MainActivity after this insert is complete
+                        if(uri != null) {
+                            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+                        }
+
+
 
 
 

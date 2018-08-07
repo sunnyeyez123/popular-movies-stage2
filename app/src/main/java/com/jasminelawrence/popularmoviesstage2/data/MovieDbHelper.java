@@ -32,8 +32,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                 MoviesEntry._ID                + " INTEGER PRIMARY KEY, " +
                 MoviesEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
                 MoviesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                MoviesEntry.COLUMN_BOX_ART_URL + " TEXT NOT NULL, " +
-                MoviesEntry.COLUMN_FAVORITE    + " BOOLEAN NOT NULL);";
+                MoviesEntry.COLUMN_BOX_ART_URL + " TEXT NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }
